@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Scheduler - Demo</title>
+	<script>
+		window.addEventListener('DOMContentLoaded', init);
+		function init(){
+			var btnDoWork = document.getElementById('btnDoWork');
+			btnDoWork.addEventListener('click', onBtnDoWorkClick);
+		}
+		function onBtnDoWorkClick(){
+			displayMessage('Work Started..');
+			setTimeout(triggerWork);
+		}
+
+		function triggerWork(){
+			doWork();
+			displayMessage('Work Completed');
+		}
+		
+		function doWork(){
+			for(var i=0; i < 10000; i++)
+				for(var j=0; j<1000; j++)
+					for(var k=0; k<1000; k++){
+
+					}
+		}
+		function displayMessage(msg){
+			document.getElementById('divMessages').innerHTML += msg + '<br/>';
+		}
+	</script>
+</head>
+<body>
+	<h1>Scheduler</h1>
+	<hr>
+	<input type="text" name="" id="">
+	<input type="button" value="Do Work" id="btnDoWork">
+	<div id="divMessages"></div>
+</body>
+</html>
