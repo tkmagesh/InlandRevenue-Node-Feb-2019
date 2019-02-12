@@ -20,11 +20,24 @@
 		}
 		
 		function doWork(){
-			for(var i=0; i < 10000; i++)
-				for(var j=0; j<1000; j++)
-					for(var k=0; k<1000; k++){
+			var currentIteration = 0,
+				totalIterations = 1000;
 
-					}
+			function oneIteration(){
+				for(var i=0; i < (10000/totalIterations); i++)
+					for(var j=0; j<1000; j++)
+						for(var k=0; k<1000; k++){
+
+						}
+				++currentIteration;
+				if (currentIteration < totalIterations){
+					setTimeout(oneIteration);
+				} else {
+					console.log('Job Done!!');
+				}
+			}
+
+			oneIteration();
 		}
 		function displayMessage(msg){
 			document.getElementById('divMessages').innerHTML += msg + '<br/>';
