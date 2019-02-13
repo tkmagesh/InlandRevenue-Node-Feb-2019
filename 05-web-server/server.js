@@ -1,8 +1,28 @@
-var http = require('http');
+var http = require('http'),
+    fs = require('fs'),
+    path = require('path');
 
 var server = http.createServer(function(req /*IncomingMessage */, res /* ServerResponse */){
-    res.write('<h1>Welcome to Node.js</h1>');
-    res.end();
+    console.log(req.url);
+    
+    var resourceName = req.url === '/' ? '/index.html' : req.url,
+        resourceFullName = path.join(__dirname, resourceName);
+
+    if (!fs.existsSync(resourceFullName)){
+        res.statusCode = 404;
+        res.end();
+        return;
+    }
+    var stream = fs.createReadStream(resourceFullName);
+   /*
+   stream.on('data', function(chunk){
+       res.write(chunk);
+   });
+   stream.on('end', function(){
+       res.end();
+   });
+   */
+  stream.pipe(res);
 });
 
 server.listen(8080);
