@@ -1,11 +1,13 @@
 var http = require('http'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    url = require('url');
 
 var server = http.createServer(function(req /*IncomingMessage */, res /* ServerResponse */){
     console.log(req.url);
     
-    var resourceName = req.url === '/' ? '/index.html' : req.url,
+    var urlObj = url.parse(req.url),
+        resourceName = urlObj.pathname === '/' ? '/index.html' : urlObj.pathname,
         resourceFullName = path.join(__dirname, resourceName);
 
     if (!fs.existsSync(resourceFullName)){
@@ -22,6 +24,11 @@ var server = http.createServer(function(req /*IncomingMessage */, res /* ServerR
        res.end();
    });
    */
+   stream.on('error', function(err){
+       console.log(err);
+       res.statusCode = 500;
+       res.end();
+   })
   stream.pipe(res);
 });
 
