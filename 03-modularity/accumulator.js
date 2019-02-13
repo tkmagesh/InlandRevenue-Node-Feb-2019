@@ -23,3 +23,13 @@ function accumulatorFactory(defaultValue = 0){
 }
 
 module.exports = accumulatorFactory;
+
+/*
+function calculatorFactory(){
+
+}
+
+module.exports.accumulatorFactory = accumulatorFactory;
+
+module.exports.calculatorFactory = calculatorFactory
+*/
