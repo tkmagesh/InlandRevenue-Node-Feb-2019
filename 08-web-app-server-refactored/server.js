@@ -1,5 +1,5 @@
 var http = require('http'),
-
+    path = require('path'),
     dataParser = require('./dataParser'),
     serveStatic = require('./serveStatic'),
     serveCalculator = require('./serveCalculator'),
@@ -22,7 +22,7 @@ app.use(function(req, res, next){
     next();
 })
 */
-app.use(serveStatic);
+app.use(serveStatic(path.join(__dirname, 'public')));
 app.use(serveCalculator);
 app.use(notFoundHandler);
 

@@ -9,7 +9,6 @@ module.exports = function serveCalculator(req, res, next){
             x = parseInt(data.x),
             y = parseInt(data.y),
             result = calculator[op](x,y);
-        console.log('[@serveCalculator] - serving calculator result');
         res.write(result.toString());
         res.end();
         next();
