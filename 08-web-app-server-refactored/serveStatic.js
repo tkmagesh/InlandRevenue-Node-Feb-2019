@@ -8,7 +8,7 @@ function isStatic(resourceName){
     return staticResExtns.indexOf(resourceExtn) >= 0;
 }
 
-module.exports = function serveStatic(req, res){
+module.exports = function serveStatic(req, res, next){
     var resourceName = req.urlObj.pathname === '/' ? '/index.html' : req.urlObj.pathname;
     if (isStatic(resourceName)){
         var  resourceFullName = path.join(__dirname, resourceName);
@@ -16,27 +16,23 @@ module.exports = function serveStatic(req, res){
             console.log('[@serveStatic] - serving 404');
             res.statusCode = 404;
             res.end();
-            return;
+            next();
         }
-        /*
+        
         var stream = fs.createReadStream(resourceFullName);
-        //stream.pipe(res);
-        stream.on('data', function(chunk){
-            console.log('[@serveStatic] - serving chunk');
-            res.write(chunk);
-        });
-        stream.on('end', function(){
-            console.log('[@serveStatic] - ending response');
-            res.end();
-        });
+        stream.pipe(res);
+       stream.on('end', function(){
+           next();
+       });
 
         stream.on('error', function(err){
             console.log(err);
             res.statusCode = 500;
             res.end();
-        })*/
-        console.log('[@serveStatic] - serving fileContents');
-        var fileContents = fs.readFileSync(resourceFullName);
-        res.write(fileContents);
+            next();
+        })
+        
+    } else {
+        next()
     }
 }
