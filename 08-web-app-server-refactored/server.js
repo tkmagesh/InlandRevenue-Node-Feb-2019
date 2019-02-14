@@ -3,23 +3,15 @@ var http = require('http'),
     dataParser = require('./dataParser'),
     serveStatic = require('./serveStatic'),
     serveCalculator = require('./serveCalculator'),
-    notFoundHandler = require('./notFoundHandler');
+    notFoundHandler = require('./notFoundHandler'),
+    app = require('./app');
 
-var _middlewares = [ dataParser, serveStatic, serveCalculator, notFoundHandler ];
+app.use(dataParser);
+app.use(serveStatic);
+app.use(serveCalculator);
+app.use(notFoundHandler);
 
-function exec(req, res, middlewares){
-    var first = middlewares[0],
-        remaining = middlewares.slice(1),
-        next = function(){
-            exec(req, res, remaining);
-        };
-    if (typeof first === 'function')
-        first(req, res, next);
-}
-
-var server = http.createServer(function(req, res){
-    exec(req, res, _middlewares);
-});
+var server = http.createServer(app);
 
 server.listen(8080);
 
@@ -27,4 +19,4 @@ server.on('listening', function(){
     console.log('server listening on 8080!');
 });
 
-console.log('Server starting....');
+console.log('Server starting..s..');
