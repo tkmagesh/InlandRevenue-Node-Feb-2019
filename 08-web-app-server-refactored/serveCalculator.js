@@ -1,7 +1,7 @@
 
 var  querystring = require('querystring'),
     calculator = require('./calculator');
-    
+
 module.exports = function serveCalculator(req, res){
     if (req.urlObj.pathname === '/calculator' && req.method === 'GET'){
         var queryData = querystring.parse(req.urlObj.query);
@@ -9,7 +9,7 @@ module.exports = function serveCalculator(req, res){
             x = parseInt(queryData.x),
             y = parseInt(queryData.y),
             result = calculator[op](x,y);
-
+        console.log('[@serveCalculator] - serving calculator result');
         res.write(result.toString());
         res.end();
     } else if (req.urlObj.pathname === '/calculator' && req.method === 'POST'){
