@@ -13,17 +13,17 @@ module.exports = function serveStatic(req, res, next){
     if (isStatic(resourceName)){
         var  resourceFullName = path.join(__dirname, resourceName);
         if (!fs.existsSync(resourceFullName)){
-            console.log('[@serveStatic] - serving 404');
+            //console.log('[@serveStatic] - serving 404');
             res.statusCode = 404;
             res.end();
-            next();
+            return next();
         }
         
         var stream = fs.createReadStream(resourceFullName);
         stream.pipe(res);
-       stream.on('end', function(){
-           next();
-       });
+        stream.on('end', function(){
+            next();
+        });
 
         stream.on('error', function(err){
             console.log(err);
