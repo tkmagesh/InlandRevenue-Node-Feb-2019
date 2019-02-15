@@ -4,6 +4,7 @@ var http = require('http'),
     logger = require('./logger'),
     serveStatic = require('./serveStatic'),
     serveCalculator = require('./serveCalculator'),
+    serveProducts = require('./serveProducts'),
     notFoundHandler = require('./notFoundHandler'),
     app = require('./app');
 /*
@@ -26,6 +27,7 @@ app.use(function(req, res, next){
 app.use(logger);
 app.use(serveStatic(path.join(__dirname, 'public')));
 app.use(serveCalculator);
+app.use(serveProducts);
 app.use(notFoundHandler);
 
 var server = http.createServer(app);
